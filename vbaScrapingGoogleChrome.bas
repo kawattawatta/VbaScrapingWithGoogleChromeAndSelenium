@@ -3,7 +3,9 @@
 '特にdriver.Waitの値は短い時間を入力しないでください
 '(DOS攻撃と勘違いされます)
 'Google検索の全てのレイアウトパターンに対応していません。
+'上手くXpathが読み込めないと無限ループから抜け出せずフリーズします。
 'そのためXPathは必要に応じて変更してください。
+'キーワードの入力セルはCells(3, 2)としていますが、自由にへんこうしてください。
 Sub 検索結果順位タイトル取得()
   '変数定義
   Dim driver As New Selenium.ChromeDriver
@@ -21,7 +23,7 @@ Sub 検索結果順位タイトル取得()
   If wsSearch.Cells(3, 2).Value = "" Then
     MsgBox ("黄色の塗りつぶし部分に" & vbCrLf & "検索ワードを入れてください")
   Else
-    'Googleアクセス★
+    'Googleアクセス
     driver.Start
     driver.Get "https://www.google.com"
     driver.Wait (5000) '待機(2秒)
@@ -40,7 +42,7 @@ Sub 検索結果順位タイトル取得()
     ranking = 1 '順位
     
     'ドメインまでリンクを取得(トップページ)
-    '10位を取得するまで続ける★
+    '10位を取得するまで続ける
     Do Until ranking > 10
       tmpStrNum = Replace(Str(ranking), " ", "") '数字をStr関数で文字にするとスペースができるため、スペースを削除
       
@@ -53,8 +55,8 @@ Sub 検索結果順位タイトル取得()
           'トップページのURLを入れる
           Call InsertTopPageURL(strURL, wsResult, ranking)
         End If
-        '通常の1位を取得 ★
-        tmpStrXPath = "//*[@id=""rso""]/div[" & tmpStrNum & "]/div/div[1]/a" '★
+        '通常の1位を取得 
+        tmpStrXPath = "//*[@id=""rso""]/div[" & tmpStrNum & "]/div/div[1]/a" 
         Call GetURLWithXPath(tmpStrXPath, driver, elements, strURL)
         If elements.Count = 1 Then
           'トップページのURLを入れる
@@ -62,11 +64,11 @@ Sub 検索結果順位タイトル取得()
         End If
         
         flagSnippet = True '強調スぺニットフラグをON
-      Else '強調スぺニットではないとき★
+      Else '強調スぺニットではないとき
         tmpStrXPath = "//*[@id=""rso""]/div[" & tmpStrNum & "]/div/div[1]/a"
         Call GetURLWithXPath(tmpStrXPath, driver, elements, strURL)
         If elements.Count = 1 Then
-          '通常の1位を取得 ★
+          '通常の1位を取得 
           Call InsertTopPageURL(strURL, wsResult, ranking)
         End If
       End If
