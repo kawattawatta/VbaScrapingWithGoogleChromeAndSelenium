@@ -1,9 +1,20 @@
 # VbaScrapingWithGoogleChromeAndSelenium
 
 VBAでスクレイピングするソースです。
-問題あります。
+
+まだ問題ありますが、ある程度使えるレベルまでいったので公開します。
+
+【問題点】
 ・10位を取得するまでループが止まらない
+
 ・検索結果のレイアウトによりXpathを変更要
+
+【ファイルの説明】
+vbaScrapingGoogleChrome.bas
+→Googleの検索順位TOP10を集計結果シートに入力します。
+
+vbaScrapingGoogleChrome_Functions.bas
+→Googleの検索結果の順位を取得するための基本形(ひな形)です。
 
 【動作環境】
 Office：EXCEL2007
