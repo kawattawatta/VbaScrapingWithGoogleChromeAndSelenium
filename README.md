@@ -15,7 +15,7 @@ CPU：Intel Celeron CPU1000M 1.80GHz,1.80GHz
 
 ライブラリ：SeleniumBasic
 
-細かい注意点は下記を参照。
+細かい注意点は下記を参照(QiitaHP)。
 
 参考URL様
 https://qiita.com/400800mkouyou/items/735704557e52bd5c08dc
