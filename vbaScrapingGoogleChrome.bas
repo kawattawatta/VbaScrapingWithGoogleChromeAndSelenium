@@ -7,6 +7,7 @@
 '上手くXpathが読み込めないと無限ループから抜け出せずフリーズします。
 'そのためXPathは必要に応じて変更してください。
 'また、1ページに10位までが表示されないと、こちらも無限ループから抜け出せません。
+'まだまだ改良要ですが、お好きにご使用ください。
 '
 'キーワードの入力セルはCells(3, 2)としていますが、自由に変更してください。
 '「集計結果」「Google」シートがありますが、シート名は何でもOKです。
@@ -87,17 +88,16 @@ Sub 検索結果順位タイトル取得()
   End If
 End Sub
 
-Function JudgeSuggestWithXPath(ByVal tmpStrXPath As String, ByVal driver As Selenium.ChromeDriver, _
-                            ByVal elements As Selenium.WebElements) As Boolean
-  
-  Set elements = driver.FindElementsByXPath(tmpStrXPath)
-  If elements.Count = 1 Then
-     JudgeSuggestWithXPath = True
-  End If
 
-End Function
-
-
+'''''''''''''''''''''''
+'機能：Xpathの場所のURLを取得する。
+'      事前にXpathのチェックを行った後、URLを取得する。
+'引数：tmpStrXPath...探したいXpath(値渡し)
+'     driver...ChromeDriver変数(値渡し)
+'     elements...WebElements変数(参照渡し)
+'     strURL...Xpathの示すURL(参照渡し)
+'返り値：strURL...Xpathの示すURL
+'
 Function GetURLWithXPath(ByVal tmpStrXPath As String, ByVal driver As Selenium.ChromeDriver, _
                             ByRef elements As Selenium.WebElements, ByRef strURL As String)
   
@@ -108,7 +108,24 @@ Function GetURLWithXPath(ByVal tmpStrXPath As String, ByVal driver As Selenium.C
 
 End Function
 
+Function JudgeSuggestWithXPath(ByVal tmpStrXPath As String, ByVal driver As Selenium.ChromeDriver, _
+                            ByVal elements As Selenium.WebElements) As Boolean
+  
+  Set elements = driver.FindElementsByXPath(tmpStrXPath)
+  If elements.Count = 1 Then
+     JudgeSuggestWithXPath = True
+  End If
 
+End Function
+
+'''''''''''''''''''''''
+'機能：XpathのトップURLを取得する
+'引数：tmpStr...ページURL(値渡し)
+'     wsResult...結果シート(値渡し)
+'     ranking...検索順位(参照渡し)
+'返り値：ranking...検索順位(参照渡し)
+'
+' 
 Function InsertTopPageURL(ByVal tmpStr As String, ByVal wsResult As Worksheet, ranking)
     'トップページのURLを入れる
     strAddress = Split(tmpStr, "/") '/で文字を分解
