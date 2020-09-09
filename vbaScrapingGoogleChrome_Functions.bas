@@ -1,36 +1,38 @@
 '☆注意☆
-'　このコードは関数をまとめたものです。
-'
+'　VBAでGoogle Chromeからプログラムの基本形です。
+'  順位を1つとります。
 Sub FunctionsFotScrapingGoogleChrome()
   '変数定義
   Dim driver As New Selenium.ChromeDriver
   Dim element_SupeUnit As Selenium.WebElements
   Dim elements As Selenium.WebElements
-  
+
+  Dim wsSearch As Worksheet
+  Set wsSearch = Worksheets("Google")  
+
   Dim strURL As String
   
-  'Googleアクセス
+  '初期化処理
   driver.Start
   driver.Get "https://www.google.com"
   driver.Wait (5000) '待機(2秒)
-  'キーワード入力
-  wsSearch.Activate 'EXCELにGoogleシートを認識させる(1004エラー対策)
 
-  driver.FindElementByName("q").SendKeys(wsSearch.Cells(3, 2)).Value  '検索ワードはセルから読み取り
+  '検索窓にキーワード入力
+  driver.FindElementByName("q").SendKeys(wsSearch.Cells(3, 2)).Value  '検索ワードはセルから読み取り(★必要に応じて変えてください)
   driver.Wait (1500) '待機(1.5秒)キーボード入力完了待ち
+  SendKeys "{ENTER}" '検索ボタンエンター(Clickは動作しない時があるため)
+  driver.Wait (2000) '表示待ち(2秒)
 
-  '検索ボタンエンター(検索ボタンのXPathクリックでは文字長さの状態によってクリックできない場合があった)
-  SendKeys "{ENTER}"
-  driver.Wait (2000) 'サジェスト表示分を加味して待機(2秒)
-
-  tmpStrXPath = "dummy" 'ここにXpathを入れます
+    
+  '処理部(Xpathを探す→あればURLを取得)：この部分に必要に応じてループを加えていく。
+  tmpStrXPath = "dummy" 'ここにXpathを入れる
     Call GetURLWithXPath(tmpStrXPath, driver, elements, strURL) 'Xpathの場所が見つかればカウント(elements, strURLに値が返る)
     If elements.Count = 1 Then 'XpathのURLあれば取得 
       Call InsertTopPageURL(strURL, wsResult, ranking)
     End If
   End If
 
-  MsgBox "順位収集完了しました"
+  MsgBox "処理完了(デバッグ機能などで変数の中身をウォッチしてみてください)"
 
   '終了処理
   driver.Close
