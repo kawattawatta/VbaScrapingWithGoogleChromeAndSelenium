@@ -1,7 +1,10 @@
-'☆注意☆
-'　VBAでGoogle Chromeからプログラムの基本形です。
-'  順位を1つとります。
-Sub FunctionsFotScrapingGoogleChrome()
+'
+'　VBAでGoogle Chromeからスクレイピングするプログラムの基本形です。
+'  処理内容...検索→Xpathの有無を確認、あればURL取得→自分の所望する処理を行う。
+'
+'  まだまだ親切な形なコードになっていないため、お好きに改良してください。
+'
+Sub VBAScrapingGoogleChrome_Base()
   '変数定義
   Dim driver As New Selenium.ChromeDriver
   Dim element_SupeUnit As Selenium.WebElements
@@ -27,7 +30,7 @@ Sub FunctionsFotScrapingGoogleChrome()
     
   '処理部(Xpathを探す→あればURLを取得)：この部分に必要に応じてループを加えていく。
       
-  tmpStrXPath = "dummy" 'ここにXpathを入れる
+  tmpStrXPath = "dummy" 'ここにXpathを入れる(dummyのままじゃ動きませんので！)
     Call GetURLWithXPath(tmpStrXPath, driver, elements, strURL) 'Xpathの場所が見つかればカウント(elements, strURLに値が返る)
     If elements.Count = 1 Then
       '↓↓↓↓ここにURLを使ったコードを書いていく↓↓↓↓
@@ -64,7 +67,7 @@ Function GetURLWithXPath(ByVal tmpStrXPath As String, ByVal driver As Selenium.C
 End Function
 
 '''''''''''''''''''''''
-'機能：Xpathの場所の有無を確認する(★mainでは使っていません★)
+'機能：Xpathの場所の有無を確認する(★本コードでは使っていません★)
 '引数：tmpStrXPath...探したいXpath(値渡し)
 '     driver...ChromeDriver変数(値渡し)
 '     elements...WebElements情報(参照渡し)
