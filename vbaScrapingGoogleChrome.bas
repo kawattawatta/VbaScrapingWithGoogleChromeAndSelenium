@@ -68,7 +68,7 @@ Sub 検索結果順位タイトル取得()
         tmpStrXPath = "//*[@id=""rso""]/div[" & tmpStrNum & "]/div/div[1]/a"
         Call GetURLWithXPath(tmpStrXPath, driver, elements, strURL)
         If elements.Count = 1 Then
-          '通常の1位を取得 
+          '通常の順位を取得 
           Call InsertTopPageURL(strURL, wsResult, ranking)
         End If
       End If
