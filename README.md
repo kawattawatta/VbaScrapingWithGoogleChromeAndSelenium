@@ -4,33 +4,38 @@ VBAでスクレイピングするソースです。
 
 まだ問題ありますが、ある程度使えるレベルまでいったので公開します。
 
-【問題点】
+# 問題点
 
-・10位を取得するまでループが止まらない
+* 10位を取得するまでループが止まらない
 
-・検索結果のレイアウトによりXpathを変更要
+* 検索結果のレイアウトによりXpathを変更要
 
-【ファイルの説明】
-vbaScrapingGoogleChrome.bas
-→Googleの検索順位TOP10を集計結果シートに入力します。
+# ファイルの説明
 
-vbaScrapingGoogleChrome_Functions.bas
-→Googleの検索結果の順位を取得するための基本形(ひな形)です。
+* vbaScrapingGoogleChrome.bas
 
-【動作環境】
-Office：EXCEL2007
+  →Googleの検索順位TOP10を集計結果シートに入力します。
 
-OS：windows8.1 64bit x64ベースプロセッサ
+* vbaScrapingGoogleChrome_Functions.bas
 
-CPU：Intel Celeron CPU1000M 1.80GHz,1.80GHz
+  →Googleの検索結果の順位を取得するための基本形(ひな形)です。
 
-メモリ：4GB
+# 動作環境
 
-ブラウザ：Google Chrome
+* Office：EXCEL2007
 
-ライブラリ：SeleniumBasic
+* OS：windows8.1 64bit x64ベースプロセッサ
 
-細かい注意点は下記を参照(QiitaHP)。
+* CPU：Intel Celeron CPU1000M 1.80GHz,1.80GHz
 
-参考URL様
-https://qiita.com/400800mkouyou/items/735704557e52bd5c08dc
+* メモリ：4GB
+
+* ブラウザ：Google Chrome
+
+* ライブラリ：SeleniumBasic
+
+インストールについては [参考URL様](https://qiita.com/400800mkouyou/items/735704557e52bd5c08dc)を参照。
+
+# 著者
+
+カワッター
