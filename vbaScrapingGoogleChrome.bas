@@ -24,6 +24,8 @@ Sub 検索結果順位タイトル取得()
   Dim elements As Selenium.WebElements
   
   Dim strURL As String
+  Dim ranking As Long
+  
   
   If wsSearch.Cells(3, 2).Value = "" Then
     MsgBox ("黄色の塗りつぶし部分に" & vbCrLf & "検索ワードを入れてください")
@@ -60,8 +62,8 @@ Sub 検索結果順位タイトル取得()
           'トップページのURLを入れる
           Call InsertTopPageURL(strURL, wsResult, ranking)
         End If
-        '通常の1位を取得 
-        tmpStrXPath = "//*[@id=""rso""]/div[" & tmpStrNum & "]/div/div[1]/a" 
+        '通常の1位を取得
+        tmpStrXPath = "//*[@id=""rso""]/div[" & tmpStrNum & "]/div/div[1]/a"
         Call GetURLWithXPath(tmpStrXPath, driver, elements, strURL)
         If elements.Count = 1 Then
           'トップページのURLを入れる
@@ -73,7 +75,7 @@ Sub 検索結果順位タイトル取得()
         tmpStrXPath = "//*[@id=""rso""]/div[" & tmpStrNum & "]/div/div[1]/a"
         Call GetURLWithXPath(tmpStrXPath, driver, elements, strURL)
         If elements.Count = 1 Then
-          '通常の順位を取得 
+          '通常の順位を取得
           Call InsertTopPageURL(strURL, wsResult, ranking)
         End If
       End If
@@ -108,6 +110,34 @@ Function GetURLWithXPath(ByVal tmpStrXPath As String, ByVal driver As Selenium.C
 
 End Function
 
+
+'''''''''''''''''''''''
+'機能：XpathのトップURLを取得する
+'引数：tmpStr...ページURL(値渡し)
+'     wsResult...結果シート(値渡し)
+'     ranking...検索順位(参照渡し)
+'返り値：ranking...検索順位(参照渡し)
+'
+'
+Function InsertTopPageURL(ByVal tmpStr As String, ByVal wsResult As Worksheet, ByRef ranking As Long)
+    'トップページのURLを入れる
+    strAddress = Split(tmpStr, "/") '/で文字を分解
+    strAddress = strAddress(0) & "//" & strAddress(2) 'http://～～～.comを作成
+    'EXCELに値を入れる
+    wsResult.Activate
+    wsResult.Range(Cells(ranking + 2, 2), Cells(ranking + 2, 2)).Value = strAddress 'セルにURLを入力
+    ranking = ranking + 1
+End Function
+
+'''''''''''''''''''''''
+'★本コードでは使っていません★
+'機能：Xpathの場所の有無を確認する
+'引数：tmpStrXPath...探したいXpath(値渡し)
+'     driver...ChromeDriver変数(値渡し)
+'     elements...WebElements情報(参照渡し)
+'返り値：JudgeSuggestWithXPath...bool値
+'       True：Xpathの要素あり False：Xpathの要素なし
+'
 Function JudgeSuggestWithXPath(ByVal tmpStrXPath As String, ByVal driver As Selenium.ChromeDriver, _
                             ByVal elements As Selenium.WebElements) As Boolean
   
@@ -118,20 +148,4 @@ Function JudgeSuggestWithXPath(ByVal tmpStrXPath As String, ByVal driver As Sele
 
 End Function
 
-'''''''''''''''''''''''
-'機能：XpathのトップURLを取得する
-'引数：tmpStr...ページURL(値渡し)
-'     wsResult...結果シート(値渡し)
-'     ranking...検索順位(参照渡し)
-'返り値：ranking...検索順位(参照渡し)
-'
-' 
-Function InsertTopPageURL(ByVal tmpStr As String, ByVal wsResult As Worksheet, ranking)
-    'トップページのURLを入れる
-    strAddress = Split(tmpStr, "/") '/で文字を分解
-    strAddress = strAddress(0) & "//" & strAddress(2) 'http://～～～.comを作成
-    'EXCELに値を入れる
-    wsResult.Activate
-    wsResult.Range(Cells(ranking + 2, 2), Cells(ranking + 2, 2)).Value = strAddress 'セルにURLを入力
-    ranking = ranking + 1
-End Function
+
