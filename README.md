@@ -1,6 +1,9 @@
 # VbaScrapingWithGoogleChromeAndSelenium
 
 VBAでスクレイピングするソースです。
+問題あります。
+・10位を取得するまでループが止まらない
+・検索結果のレイアウトによりXpathを変更要
 
 【動作環境】
 Office：EXCEL2007
